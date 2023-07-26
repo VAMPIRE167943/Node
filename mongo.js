@@ -1,9 +1,11 @@
-//Connection to Mongo
-var MongoClient = require("mongodb")
+const { MongoClient } = require("mongodb");
 
-async function connect(client) {
-  client = await MongoClient.connect("mongodb://localhost:27017", {useUnifiedTopology: true});
+async function connect() {
+  const client = await MongoClient.connect("mongodb://127.0.0.1:27017", {
+    useUnifiedTopology: true,
+    monitorCommands: true,
+  });
   return client.db("mongooseBase");
 }
 
-module.exports = {connect}
+module.exports = { connect };

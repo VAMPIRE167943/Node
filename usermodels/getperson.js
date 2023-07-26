@@ -1,10 +1,10 @@
 const { ObjectId } = require("mongodb")
 var connect = require("../mongo.js")
 
-function getperson(id){
+async function getperson(id){
     try{
-        var birb = connect()
-        var person = birb.collection("users").findOne(
+        var birb = await connect()
+        var person = await birb.collection("users").findOne(
             {_id: ObjectId(id)}
         )
         return person

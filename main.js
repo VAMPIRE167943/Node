@@ -2,62 +2,65 @@
 var express = require("express")
 var bodyParser = require("body-parser")
 var cron = require("node-cron")
-var createperson = require("./usermodels/createperson.js")
-var updateperson = require("./usermodels/updateperson.js")
-var getpeople = require("./usermodels/getpeople.js")
-var getperson = require("./usermodels/getperson.js")
-var destroyperson = require("./usermodels/destroyperson.js")
-var maketask = require("./taskmodels/maketask.js")
-var updatetask = require("./taskmodels/updatetask.js")
-var removetask = require("./taskmodels/removetask.js")
-var gettasks = require("./taskmodels/gettasks.js")
-var gettask = require("./taskmodels/gettask.js")
-var job = require("./Kronos/time.js")
+var {createperson} = require("./usermodels/createperson")
+var {updateperson} = require("./usermodels/updateperson.js")
+var {getpeople} = require("./usermodels/getpeople.js")
+var {getperson} = require("./usermodels/getperson.js")
+var {destroyperson} = require("./usermodels/destroyperson.js")
+var {maketask} = require("./taskmodels/maketask.js")
+var {updatetask} = require("./taskmodels/updatetask.js")
+var {removetask} = require("./taskmodels/removetask.js")
+var {gettasks} = require("./taskmodels/gettasks.js")
+var {gettask} = require("./taskmodels/gettask.js")
+var {job} = require("./Kronos/time.js")
 
 //To initiate express as an app or the entire damn project just refuses to comply :/
 var exp = express()
 //To parse the request or else big boy errors
 exp.use(bodyParser.json())
 
-//CRUD users with REST
-exp.post("/api/users", function(req, res){
+// CRUD users with REST
+exp.post("/api/users", async function(req, res){
     try{
-        var {username, firstname, lastname} = req.body
-        createperson({
+        var {username, first_name, last_name} = req.body
+        var newperson = await createperson({
             username,
-            firstname,
-            lastname
+            first_name,
+            last_name
         })
+        res.status(201).json(newperson)
     }catch(err){
-        console.log(err)
+        console.error(err)
     }
 })
 
-exp.patch("/api/users/:id", function(req, res){
+exp.patch("/api/users/:id", async function(req, res){
     try{
         var {id} = req.params
-        var {firstname, lastname} = req.body
-        updateperson(id, {
-            firstname,
-            lastname
+        var {first_name, last_name} = req.body
+        await updateperson(id, {
+            first_name,
+            last_name
         })
+        
     }catch(err){
         console.log(err)
     }
 })
 
-exp.get("/api/users", function(req, res){
+exp.get("/api/users", async function(req, res){
     try{
-        getpeople()
+        var people = await getpeople()
+        res.status(200).json(people)
     }catch(err){
         console.log(err)
     }
 })
 
-exp.get("/api/users/:id", function(req, res){
+exp.get("/api/users/:id", async function(req, res){
     try{
         var {id} = req.params
-        getperson(id)
+        await getperson(id)
     }catch(err){
         console.log(err)
     }

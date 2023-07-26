@@ -1,9 +1,9 @@
 const { ObjectId } = require("mongodb")
 var connect = require("../mongo.js")
 
-function destroyperson(personid){
+async function destroyperson(personid){
     var birb = connect()
-    birb.collection("users").findOneAndDelete(
+    await birb.collection("users").findOneAndDelete(
         {_id: ObjectId(personid)}
     )
 }

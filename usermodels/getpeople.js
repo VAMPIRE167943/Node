@@ -1,9 +1,10 @@
-var connect = require("../mongo.js")
+var {connect} = require("../mongo.js")
 
-function getpeople(){
+async function getpeople(){
     try{
-        var birb = connect()
-        birb.collection("users").find().toArray()
+        var birb = await connect()
+        var people = birb.collection("users").find().toArray()
+        return people
     }catch(err){
         console.log(err)
     }

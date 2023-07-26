@@ -1,10 +1,10 @@
 const { ObjectId } = require("mongodb")
-var connect = require("../mongo.js")
+var {connect} = require("../mongo.js")
 
-function updateperson(personid, ascension){
+async function updateperson(personid, ascension){
     try{
-        var birb = connect()
-        birb.collection("users").updateOne(
+        var birb = await connect()
+        await birb.collection("users").updateOne(
             {_id: ObjectId(personid)},
             {$set: ascension})
     }catch(err){

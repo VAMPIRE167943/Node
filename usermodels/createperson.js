@@ -1,11 +1,11 @@
-var connect = require("../mongo")
+var {connect} = require("../mongo")
 
-function createperson(stats){
+async function createperson(stats){
     try{
-        var birb = connect()
-        birb.collection("users").insertOne(stats)
+        var birb = await connect()
+        await birb.collection("users").insertOne(stats)
     }catch(err){
-        console.log(err)
+        console.error(err)
     }
 }
 
