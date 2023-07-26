@@ -66,7 +66,8 @@ exp.get("/api/users/:id", function(req, res){
 //Because why not??
 exp.delete("/api/users/:id", function(req, res){
     try{
-
+        var {id} = req.params
+        destroyperson(id)
     }catch(err){
         console.log(err)
     }
