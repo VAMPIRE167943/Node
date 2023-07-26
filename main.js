@@ -123,7 +123,7 @@ exp.get("/api/users/user_id/tasks", function(req, res){
 })
 
 //Job scheduler
-cron.schedule("* * * * * *", function(){
+cron.schedule("* * * * *", function(){
     console.log("Running")
     job()
 })
