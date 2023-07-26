@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongodb")
-var connect = require("../mongo.js")
+var {connect} = require("../mongo.js")
 
 async function getperson(id){
     try{
