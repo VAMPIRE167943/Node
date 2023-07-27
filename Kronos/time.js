@@ -1,15 +1,13 @@
 var { connect } = require("../mongo.js"); //Import connection to mongo
-var tomorrow = require("date-and-time") //Import date-and-time module
 
 async function job() {
   try {
     var birb = await connect(); //Connect to mongo
     var time = new Date(); //Instantiate a Date object from date-and-time module
-    var form = tomorrow.format(time, "YYY-MM-DD") //Format the form
     var pend = await birb.collection("tasks").find({
       status: "pending",
-      next_execute_date_time: { $lte: form },
-    }).toArray() //Mongodb find query based on status and next_execute_date_time params. Returns a cursor converted to Array
+      date_time: { $lte: Date.parse(time) },
+    }).toArray() //Mongodb find query based on status and date_time params. Returns a cursor converted to Array
 
     for (var task of pend) { //Iterates through the Array and makes changes accordingly
       await birb.collection("tasks").updateOne(

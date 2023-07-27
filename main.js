@@ -13,6 +13,7 @@ var {removetask} = require("./taskmodels/removetask.js")
 var {gettasks} = require("./taskmodels/gettasks.js")
 var {gettask} = require("./taskmodels/gettask.js")
 var {job} = require("./Kronos/time.js")
+var tomorrow = require("date-and-time") //Import date-and-time module
 
 //To initiate express as an app or the entire damn project just refuses to comply :/
 var exp = express()
@@ -88,8 +89,8 @@ exp.delete("/api/users/:id", async function(req, res){
 exp.post("/api/users/:user_id/tasks", async function(req, res){
     try{
         var {user_id} = req.params
-        var {name, description, date_time, status, next_execute_date_time} = req.body
-        var work = await maketask(user_id, {name, description, date_time, status, next_execute_date_time})
+        var {name, description, date_time, status} = req.body
+        var work = await maketask(user_id, name, description, Date.parse(date_time), status)
         res.json(work)
     }catch(err){
         console.log(err)
@@ -100,9 +101,9 @@ exp.post("/api/users/:user_id/tasks", async function(req, res){
 exp.patch("/api/users/:user_id/tasks/:task_id", async function(req, res){
     try{
         var {user_id, task_id} = req.params
-        var {name, description, date_time, status, next_execute_date_time} = req.body
+        var {name, description, date_time, status} = req.body
         var more_work = await updatetask(user_id, task_id,
-            {name, description, date_time, status, next_execute_date_time}
+            {name, description, date_time, status}
         )
         res.json(more_work)
     }catch(err){
