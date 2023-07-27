@@ -11,6 +11,7 @@ Steps on running and testing--------
 node main.js
 ```
 5. Open another Git Bash instance and execute cURL commands.
+
 Create User:
 ```
 curl -i -H "Content-Type: application/json" -X POST -d '{"username":"jsmith","first_name" : "John", "last_name" : "Smith"}' http://localhost:3000/api/users
