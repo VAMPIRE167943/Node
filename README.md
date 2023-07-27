@@ -38,7 +38,7 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"name":"My task","descr
 ```
 Update Task:
 ```
-curl -i -H "Content-Type: application/json" -X PUT -d '{"name":"My updated task"}' http://localhost:3000/api/users/{user_id}/tasks/{task_id}
+curl -i -H "Content-Type: application/json" -X PATCH -d '{"name":"My updated task"}' http://localhost:3000/api/users/{user_id}/tasks/{task_id}
 ```
 Delete Task:
 ```
