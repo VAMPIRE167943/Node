@@ -34,7 +34,7 @@ curl -i -X DELETE http://localhost:3000/api/users/{id}
 ```
 Create Task:
 ```
-curl -i -H "Content-Type: application/json" -X POST -d '{"name":"My task","description" : "Description of task", "date_time" : "2016-05-25 14:25:00", "status" : "pending", "next_execute_date_time" : "2016-05-25 14:25:00"}' http://localhost:3000/api/users/{user_id}/tasks
+curl -i -H "Content-Type: application/json" -X POST -d '{"name":"My task","description" : "Description of task", "date_time" : "2016-05-25 14:25:00", "status" : "pending"}' http://localhost:3000/api/users/{user_id}/tasks
 ```
 Update Task:
 ```
