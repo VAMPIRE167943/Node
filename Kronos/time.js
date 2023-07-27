@@ -16,7 +16,7 @@ async function job() {
         { $set: { status: "done" } }
       );
       console.log(`Task ${task.name} update to done`);
-      console.log("F**k yeah it actually works :D")
+      console.log("F**k yeah it actually works.......this time :D")
     }
   } catch (err) {
     console.log(err);
