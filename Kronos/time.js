@@ -1,11 +1,10 @@
-//Import connection to mongo
-var { connect } = require("../mongo.js");
-var tomorrow = require("date-and-time")
+var { connect } = require("../mongo.js"); //Import connection to mongo
+var tomorrow = require("date-and-time") //Import date-and-time module
 
 async function job() {
   try {
     var birb = await connect(); //Connect to mongo
-    var time = new Date(); //Instantiate a Date object
+    var time = new Date(); //Instantiate a Date object from date-and-time module
     var form = tomorrow.format(time, "YYY-MM-DD") //Format the form
     var pend = await birb.collection("tasks").find({
       status: "pending",
