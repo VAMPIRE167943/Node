@@ -88,8 +88,8 @@ exp.delete("/api/users/:id", async function(req, res){
 exp.post("/api/users/:user_id/tasks", async function(req, res){
     try{
         var {user_id} = req.params
-        var {name, description, date_time} = req.body
-        var work = await maketask(user_id, {name, description, date_time})
+        var {name, description, date_time, status, next_execute_date_time} = req.body
+        var work = await maketask(user_id, {name, description, date_time, status, next_execute_date_time})
         res.json(work)
     }catch(err){
         console.log(err)
@@ -100,9 +100,9 @@ exp.post("/api/users/:user_id/tasks", async function(req, res){
 exp.patch("/api/users/:user_id/tasks/:task_id", async function(req, res){
     try{
         var {user_id, task_id} = req.params
-        var {name, description, date_time} = req.body
+        var {name, description, date_time, status, next_execute_date_time} = req.body
         var more_work = await updatetask(user_id, task_id,
-            {name, description, date_time}
+            {name, description, date_time, status, next_execute_date_time}
         )
         res.json(more_work)
     }catch(err){
@@ -143,9 +143,8 @@ exp.get("/api/users/:user_id/tasks", async function(req, res){
 })
 
 //Job scheduler
-cron.schedule("* * * * * *", function(){
-    console.log("Running")
-    job()
+cron.schedule("* * * * * *", async function(){
+    await job()
 })
 
 
