@@ -40,7 +40,7 @@ Update Task:
 ```
 curl -i -H "Content-Type: application/json" -X PATCH -d '{"name":"My updated task"}' http://localhost:3000/api/users/{user_id}/tasks/{task_id}
 ```
-Delete Task:
+Delete Task (This one is freaky so just Ctrl + C to break):
 ```
 curl -i -H "Content-Type: application/json" -X DELETE http://localhost:3000/api/users/{user_id}/tasks/{task_id}
 ```
