@@ -20,6 +20,7 @@ var exp = express()
 exp.use(bodyParser.json())
 
 // CRUD users with REST
+//CREATE
 exp.post("/api/users", async function(req, res){
     try{
         var {username, first_name, last_name} = req.body
@@ -28,12 +29,13 @@ exp.post("/api/users", async function(req, res){
             first_name,
             last_name
         })
-        res.status(201).json(newperson)
+        res.json(newperson)
     }catch(err){
         console.error(err)
     }
 })
 
+//UPDATE
 exp.patch("/api/users/:id", async function(req, res){
     try{
         var {id} = req.params
@@ -42,92 +44,106 @@ exp.patch("/api/users/:id", async function(req, res){
             first_name,
             last_name
         })
-        
+
     }catch(err){
         console.log(err)
     }
 })
 
+//READ all
 exp.get("/api/users", async function(req, res){
     try{
         var people = await getpeople()
-        res.status(200).json(people)
+        res.json(people)
     }catch(err){
         console.log(err)
     }
 })
 
+//READ single
 exp.get("/api/users/:id", async function(req, res){
     try{
         var {id} = req.params
-        await getperson(id)
+        var human = await getperson(id)
+        res.json(human)
     }catch(err){
         console.log(err)
     }
 })
 
+//DELETE
 //Because why not??
-exp.delete("/api/users/:id", function(req, res){
+exp.delete("/api/users/:id", async function(req, res){
     try{
         var {id} = req.params
-        destroyperson(id)
+        await destroyperson(id)
+        res.end("Kill confirmed")
     }catch(err){
         console.log(err)
     }
 })
 
 //CRUD tasks with REST
-exp.post("/api/users/user_id/tasks", function(req, res){
+//CREATE
+exp.post("/api/users/:user_id/tasks", async function(req, res){
     try{
         var {user_id} = req.params
         var {name, description, date_time} = req.body
-        maketask(user_id, {name, description, date_time})
+        var work = await maketask(user_id, {name, description, date_time})
+        res.json(work)
     }catch(err){
         console.log(err)
     }
 })
 
-exp.patch("/api/users/user_id/tasks/task_id", function(req, res){
+//UPDATE
+exp.patch("/api/users/:user_id/tasks/:task_id", async function(req, res){
     try{
         var {user_id, task_id} = req.params
         var {name, description, date_time} = req.body
-        updatetask(user_id, task_id,
+        var more_work = await updatetask(user_id, task_id,
             {name, description, date_time}
         )
+        res.json(more_work)
     }catch(err){
         console.log(err)
     }
 })
 
-exp.delete("/api/users/user_id/tasks/task_id", function(req, res){
+//DELETE
+exp.delete("/api/users/:user_id/tasks/:task_id", async function(req, res){
     try{
         var {user_id, task_id} = req.params
-        removetask(user_id, task_id)
+        await removetask(user_id, task_id)
     }catch(err){
         console.log(err)
     }
 })
 
-exp.get("/api/users/user_id/tasks/task_id", function(req, res){
+//READ single
+exp.get("/api/users/:user_id/tasks/:task_id", async function(req, res){
     try{
-        var {task_id, user_id} = req.params
-        gettask(task_id, user_id)
+        var {user_id, task_id} = req.params
+        var stalk = await gettask(user_id, task_id)
+        res.json(stalk)
     }catch(err){
         console.log(err)
     }
 })
 
-exp.get("/api/users/user_id/tasks", function(req, res){
+//READ all
+exp.get("/api/users/:user_id/tasks", async function(req, res){
     try{
         var {user_id} = req.params
-        gettasks(user_id)
+        var overseer = await gettasks(user_id)
+        res.json(overseer)
     }catch(err){
         console.log(err)
     }
 })
 
 //Job scheduler
-cron.schedule("* * * * *", function(){
+cron.schedule("* * * * * *", function(){
     console.log("Running")
     job()
 })

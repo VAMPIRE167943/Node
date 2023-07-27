@@ -1,15 +1,16 @@
-var connect = require("../mongo.js")
+var {connect} = require("../mongo.js") //Import connection to mongo
 
-function maketask(personid, rewards){
+async function maketask(personid, rewards){
     try{
-        var birb = connect()
-        birb.collection("tasks").insertOne({
+        var birb = await connect() //Connect to mongo
+        var work = await birb.collection("tasks").insertOne({
             user_id: personid,
             ...rewards
-        })
+        }) //Mongodb insert query to insert a doc with specified params
+        return work
     }catch(err){
         console.log(err)
     }
 }
 
-module.exports = {maketask}
+module.exports = {maketask} //Make it available globally if imported
