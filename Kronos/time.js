@@ -1,10 +1,10 @@
-const moment = require("moment/moment.js");
+const moment = require("moment/moment.js"); //moment library tops date-and-time
 var { connect } = require("../mongo.js"); //Import connection to mongo
 
 async function job() {
   try {
     var birb = await connect(); //Connect to mongo
-    var time = moment(); //Instantiate a Date object from date-and-time module
+    var time = moment(); //Initiate moment library to make it usable
     var pend = await birb.collection("tasks").find({
       status: "pending",
       date_time: { $lte: time.format() },
